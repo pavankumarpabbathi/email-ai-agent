@@ -32,7 +32,7 @@ jobs:
               
       - name: Build, tag, and push image to ECR
         env:
-          ECR_REGISTRY: ${{ steps.create-repo.outputs.registry }}
+          ECR_REGISTRY: ${{ steps.create-repo.outputs.repositoryUri }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
         run: |
           docker build -t  $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
