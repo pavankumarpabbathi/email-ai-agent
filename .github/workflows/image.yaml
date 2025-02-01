@@ -28,7 +28,7 @@ jobs:
         id: create-repo
         uses: int128/create-ecr-repository-action@v1
         with:
-          repository: ${{ env.ECR_REPOSITORY }}
+          repository: ${{ var.ECR_REPOSITORY }}
               
       - name: Build, tag, and push image to ECR
         env:
