@@ -41,8 +41,10 @@ jobs:
       
       - name: Start a repository dispatch for depoly Infrastructure using new image
         uses: peter-evans/repository-dispatch@v1
+        env: 
+          image_uri: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         with:
           token: ${{ secrets.REPO_ACCESS_PAT }}
           repository: "pavankumarpabbathi/email-sender-ai-agent-infrastructure"
           event-type: "Deploy"
-          client-payload: '{"image_uri": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" }'
+          client-payload: '{"image_uri": "${{ env.image_uri }}" }'
