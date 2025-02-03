@@ -45,4 +45,4 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_PAT }}
           repository: "email-sender-ai-agent-infrastructure"
           event-type: "Deploy"
-          client-payload: '{"imageURI": $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG }'
+          client-payload: '{"imageURI": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" }'
