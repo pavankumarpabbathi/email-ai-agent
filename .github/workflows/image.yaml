@@ -45,6 +45,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v1 
         with:
           token: ${{ secrets.REPO_ACCESS_PAT }}
-          repository: "pavankumarpabbathi/email-sender-ai-agent-infrastructure"
+          repository: "pavankumarpabbathi/email-ai-agent-infrastructure"
           event-type: "Deploy"
           client-payload: '{"image_uri": "${{ steps.build_push.outputs.IMAGE_URI }}" }'
