@@ -31,6 +31,7 @@ jobs:
           repository: ${{ vars.ECR_REPOSITORY }}
               
       - name: Build, tag, and push image to ECR
+        id: build_push
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
@@ -38,13 +39,12 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-      
+          echo "IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> "$GITHUB_OUTPUT"  
+          
       - name: Start a repository dispatch for depoly Infrastructure using new image
-        uses: peter-evans/repository-dispatch@v1
-        env: 
-          image_uri: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        uses: peter-evans/repository-dispatch@v1 
         with:
           token: ${{ secrets.REPO_ACCESS_PAT }}
           repository: "pavankumarpabbathi/email-sender-ai-agent-infrastructure"
           event-type: "Deploy"
-          client-payload: '{"image_uri": "${{ env.image_uri }}" }'
+          client-payload: '{"image_uri": "${{ steps.build_push.outputs.IMAGE_URI }}" }'
